@@ -12,7 +12,7 @@ Este repositorio contiene **solo el frontend**. La API se consume desde
 
 - Node.js 20 o superior.
 - Una API disponible en `VITE_API_URL` (por defecto `http://localhost:8000`). En
-  producción se usa `/api`, sin dominio, a través de un proxy inverso.
+  producción se consume directamente desde el dominio de la API.
 
 ## Instalación
 
@@ -21,16 +21,17 @@ Este repositorio contiene **solo el frontend**. La API se consume desde
 
 ## Variables de entorno
 
-| Variable       | Descripción                      | Local                   | Producción |
-| -------------- | -------------------------------- | ----------------------- | ---------- |
-| `VITE_API_URL` | URL base de la API sin `/` final | `http://localhost:8000` | `/api`     |
+| Variable       | Descripción                      | Local                   | Producción                            |
+| -------------- | -------------------------------- | ----------------------- | ------------------------------------- |
+| `VITE_API_URL` | URL base de la API sin `/` final | `http://localhost:8000` | `https://api-midinero.pradov.xyz`     |
 
 - `.env.example` documenta la variable.
-- `.env.production` usa `/api` (misma origen, sin dominio) y Vite lo usa en
-  `npm run build`.
+- `.env.production` fija la API de producción y Vite lo usa en `npm run build`.
 - Para desarrollo local, crea `.env.local` con `VITE_API_URL=http://localhost:8000`.
-- En desarrollo, Vite reescribe `/api/*` hacia `http://localhost:8000/*`. En
-  producción, el servidor web debe hacer el mismo proxy inverso.
+- En desarrollo, Vite también reescribe `/api/*` hacia `http://localhost:8000/*`
+  si prefieres usar una ruta relativa.
+- La API permite CORS desde cualquier origen, por lo que el frontend puede
+  consumirla directamente sin proxy inverso.
 
 Vite solo expone variables con el prefijo `VITE_`. No guardes secretos en
 variables del frontend.
@@ -54,8 +55,8 @@ Rutas disponibles en W1:
 - `public/CNAME` fija `midinero.pradov.xyz` (GitHub Pages). Si se publica en
   otro proveedor, ese archivo se ignora y el dominio se configura en el panel
   del proveedor.
-- La API de producción se consume en `/api` mediante proxy inverso
-  (`.env.production`), sin dominio ni CORS.
+- La API de producción se fija en `.env.production` y se consume directamente;
+  la API admite CORS desde cualquier origen.
 
 ## Pruebas
 
