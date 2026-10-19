@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { ProtectedRoute } from "./components/routing/ProtectedRoute";
 import AppLayout from "./layouts/AppLayout";
-import Demo from "./pages/Demo";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -14,22 +13,6 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
-      {import.meta.env.DEV && <Route path="/demo" element={<Demo />} />}
-
-      <Route
-        path="/app/movimientos"
-        element={
-          <AppLayout>
-            <div className="preview-banner" role="note">
-              <span>
-                Vista previa temporal sin autenticación. El acceso real y los
-                datos de tu cuenta llegan con W2.
-              </span>
-            </div>
-            <TransactionsPage />
-          </AppLayout>
-        }
-      />
 
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
@@ -44,6 +27,7 @@ export default function App() {
               />
             }
           />
+          <Route path="/app/movimientos" element={<TransactionsPage />} />
           <Route
             path="/app/transferencias"
             element={

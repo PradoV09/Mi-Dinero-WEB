@@ -120,11 +120,6 @@ export default function Landing() {
               <ShieldCheck aria-hidden="true" size={16} />
               Tus datos son registrados por ti. No leemos saldos bancarios.
             </p>
-            {import.meta.env.DEV && (
-              <p className="hero__dev-link">
-                <Link to="/demo">Vista previa de la interfaz base</Link>
-              </p>
-            )}
           </div>
 
           <Card className="health-card" title="Estado del servicio">

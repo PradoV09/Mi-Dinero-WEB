@@ -27,14 +27,6 @@ export default function Login() {
           <Link to="/" className={buttonClassName({ variant: "secondary", block: true })}>
             Volver al inicio
           </Link>
-          {import.meta.env.DEV && (
-            <Link
-              to="/demo"
-              className={buttonClassName({ variant: "ghost", block: true })}
-            >
-              Ver la interfaz base
-            </Link>
-          )}
         </div>
       </Card>
     </div>
