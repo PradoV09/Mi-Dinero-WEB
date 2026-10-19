@@ -16,6 +16,21 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       {import.meta.env.DEV && <Route path="/demo" element={<Demo />} />}
 
+      <Route
+        path="/app/movimientos"
+        element={
+          <AppLayout>
+            <div className="preview-banner" role="note">
+              <span>
+                Vista previa temporal sin autenticación. El acceso real y los
+                datos de tu cuenta llegan con W2.
+              </span>
+            </div>
+            <TransactionsPage />
+          </AppLayout>
+        }
+      />
+
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
           <Route path="/app" element={<DashboardPage />} />
@@ -29,7 +44,6 @@ export default function App() {
               />
             }
           />
-          <Route path="/app/movimientos" element={<TransactionsPage />} />
           <Route
             path="/app/transferencias"
             element={

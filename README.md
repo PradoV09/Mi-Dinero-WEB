@@ -46,7 +46,8 @@ Rutas disponibles:
 - `/` — presentación pública y estado de la API.
 - `/login` — placeholder de autenticación (W2).
 - `/app` — resumen privado (protegido; redirige a login sin sesión).
-- `/app/movimientos` — ingresos y gastos (contra contrato provisional).
+- `/app/movimientos` — ingresos y gastos (contrato provisional). **Vista previa
+  temporal sin autenticación** hasta que exista W2; muestra un aviso visible.
 - `/demo` — vista previa de la interfaz, solo en modo desarrollo.
 
 ## Dominio y despliegue
@@ -114,8 +115,9 @@ repo para la prueba manual contra la API local.
 - **Flujo manual contra la API real:** imposible hoy: no existen endpoints de
   auth, cuentas, categorías ni movimientos. La API desplegada solo tiene
   `/health`. No se crearon datos falsos ni se modificó el backend.
-- **Autenticación real:** `AuthContext` sigue devolviendo `anonymous`; `/app/*`
-  redirige a login. Falta W2 (login, `GET /auth/me`, logout, CSRF real).
+- **Autenticación real:** `AuthContext` sigue devolviendo `anonymous`; el resto
+  de `/app/*` redirige a login y `/app/movimientos` es una vista previa temporal
+  sin sesión. Falta W2 (login, `GET /auth/me`, logout, CSRF real).
 - **Cuentas (W3):** no hay pantalla de cuentas ni ficha de cuenta; por tanto no
   existe el historial por cuenta y el refresco de saldos solo se prueba con MSW.
 - **Contrato de movimientos:** las rutas y campos son provisionales; cualquier
