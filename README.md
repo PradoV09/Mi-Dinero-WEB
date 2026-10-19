@@ -97,3 +97,4 @@ de tipos.
   confirmación de correo, recuperación de contraseña y logout.
 - W3 a W7: cuentas, movimientos, dashboard, transferencias y perfil.
 - E2E con Playwright + Mailpit cuando la API esté lista.
+# Mi-Dinero-WEB
