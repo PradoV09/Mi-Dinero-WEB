@@ -45,6 +45,20 @@ describe("formatMoney", () => {
       "US$ 9.876.543.210,10",
     );
   });
+
+  it("formatea cero en cada moneda", () => {
+    expect(normalizeSpaces(formatMoney("0", "COP"))).toBe("$ 0");
+    expect(normalizeSpaces(formatMoney("0", "USD"))).toBe("US$ 0,00");
+    expect(normalizeSpaces(formatMoney("0", "EUR"))).toBe("EUR 0,00");
+  });
+
+  it("formatea strings enormes sin perder dígitos", () => {
+    expect(
+      normalizeSpaces(
+        formatMoney("123456789012345678901234567890.99", "USD"),
+      ),
+    ).toBe("US$ 123.456.789.012.345.678.901.234.567.890,99");
+  });
 });
 
 describe("utilidades de moneda", () => {

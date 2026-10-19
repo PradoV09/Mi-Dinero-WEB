@@ -9,3 +9,10 @@ export interface ApiErrorPayload {
 export interface HealthResponse {
   status: string;
 }
+
+export interface Paginated<T> {
+  items: T[];
+  page: number;
+  page_size: number;
+  total: number;
+}

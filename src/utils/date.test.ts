@@ -4,6 +4,7 @@ import {
   formatDateTime,
   parseDateOnly,
   toDateInputValue,
+  todayInBogota,
 } from "./date";
 
 describe("fechas", () => {
@@ -25,5 +26,23 @@ describe("fechas", () => {
 
   it("genera el valor de un input date", () => {
     expect(toDateInputValue(new Date(2026, 0, 5))).toBe("2026-01-05");
+  });
+
+  it("calcula el día en America/Bogota, no en UTC", () => {
+    expect(todayInBogota(new Date("2026-10-20T02:30:00.000Z"))).toBe(
+      "2026-10-19",
+    );
+    expect(todayInBogota(new Date("2026-10-20T05:30:00.000Z"))).toBe(
+      "2026-10-20",
+    );
+  });
+
+  it("respeta el borde de mes en America/Bogota", () => {
+    expect(todayInBogota(new Date("2026-11-01T03:00:00.000Z"))).toBe(
+      "2026-10-31",
+    );
+    expect(todayInBogota(new Date("2026-11-01T06:00:00.000Z"))).toBe(
+      "2026-11-01",
+    );
   });
 });

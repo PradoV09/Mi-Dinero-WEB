@@ -6,6 +6,7 @@ import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import DashboardPage from "./pages/app/DashboardPage";
+import TransactionsPage from "./pages/app/TransactionsPage";
 import UpcomingPage from "./pages/app/UpcomingPage";
 
 export default function App() {
@@ -28,16 +29,7 @@ export default function App() {
               />
             }
           />
-          <Route
-            path="/app/movimientos"
-            element={
-              <UpcomingPage
-                title="Movimientos"
-                milestone="W4"
-                description="Aquí podrás registrar ingresos y gastos, filtrarlos y consultar tu historial."
-              />
-            }
-          />
+          <Route path="/app/movimientos" element={<TransactionsPage />} />
           <Route
             path="/app/transferencias"
             element={

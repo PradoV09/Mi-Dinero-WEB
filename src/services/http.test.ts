@@ -146,6 +146,56 @@ describe("cliente HTTP", () => {
     expect(unauthorizedCalls).toBe(0);
   });
 
+  it.each([404, 409, 422, 429])(
+    "propaga el estado %i con el sobre de error",
+    async (status) => {
+      server.use(
+        http.get(`${API_URL}/recurso`, () =>
+          HttpResponse.json(
+            {
+              error: {
+                code: `http_${status}`,
+                message: `Error ${status}`,
+              },
+            },
+            { status },
+          ),
+        ),
+      );
+
+      await expect(
+        request("/recurso", { skipUnauthorizedRedirect: true }),
+      ).rejects.toMatchObject({
+        status,
+        code: `http_${status}`,
+        message: `Error ${status}`,
+      });
+    },
+  );
+
+  it("propaga un fallo de red del fetch", async () => {
+    server.use(
+      http.get(`${API_URL}/recurso`, () => HttpResponse.error()),
+    );
+
+    await expect(
+      request("/recurso", { skipUnauthorizedRedirect: true }),
+    ).rejects.toThrow();
+  });
+
+  it("resuelve sin cuerpo para un 204", async () => {
+    server.use(
+      http.delete(
+        `${API_URL}/recurso/1`,
+        () => new HttpResponse(null, { status: 204 }),
+      ),
+    );
+
+    await expect(
+      request("/recurso/1", { method: "DELETE" }),
+    ).resolves.toBeUndefined();
+  });
+
   it("extrae errores de campo desde un arreglo de details", () => {
     const error = new ApiError(422, "validation_error", "Datos inválidos", [
       { field: "amount", message: "El importe debe ser positivo." },

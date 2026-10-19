@@ -1,5 +1,6 @@
 const DEFAULT_LOCALE = "es-CO";
 const DATE_ONLY_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
+export const BOGOTA_TIME_ZONE = "America/Bogota";
 
 export function parseDateOnly(value: string): Date | null {
   const match = DATE_ONLY_PATTERN.exec(value);
@@ -62,6 +63,25 @@ export function formatDateTime(
     dateStyle: "medium",
     timeStyle: "short",
   }).format(date);
+}
+
+export function todayInBogota(date = new Date()): string {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: BOGOTA_TIME_ZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+
+  const year = parts.find((part) => part.type === "year")?.value;
+  const month = parts.find((part) => part.type === "month")?.value;
+  const day = parts.find((part) => part.type === "day")?.value;
+
+  if (!year || !month || !day) {
+    return toDateInputValue(date);
+  }
+
+  return `${year}-${month}-${day}`;
 }
 
 export function toDateInputValue(date: Date): string {

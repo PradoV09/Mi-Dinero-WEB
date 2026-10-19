@@ -81,7 +81,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </p>
         )}
         {error && (
-          <p className="field__error" id={errorId}>
+          <p className="field__error" id={errorId} role="alert">
             {error}
           </p>
         )}
