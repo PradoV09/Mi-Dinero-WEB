@@ -11,7 +11,8 @@ Este repositorio contiene **solo el frontend**. La API se consume desde
 ## Requisitos
 
 - Node.js 20 o superior.
-- Una API disponible en `VITE_API_URL` (por defecto `http://localhost:8000`).
+- Una API disponible en `VITE_API_URL` (por defecto `http://localhost:8000`). En
+  producción se usa `/api`, sin dominio, a través de un proxy inverso.
 
 ## Instalación
 
@@ -20,13 +21,16 @@ Este repositorio contiene **solo el frontend**. La API se consume desde
 
 ## Variables de entorno
 
-| Variable       | Descripción                      | Local                   | Producción                            |
-| -------------- | -------------------------------- | ----------------------- | ------------------------------------- |
-| `VITE_API_URL` | URL base de la API sin `/` final | `http://localhost:8000` | `https://api-midinero.pradov.xyz`     |
+| Variable       | Descripción                      | Local                   | Producción |
+| -------------- | -------------------------------- | ----------------------- | ---------- |
+| `VITE_API_URL` | URL base de la API sin `/` final | `http://localhost:8000` | `/api`     |
 
 - `.env.example` documenta la variable.
-- `.env.production` fija la API de producción y Vite lo usa en `npm run build`.
+- `.env.production` usa `/api` (misma origen, sin dominio) y Vite lo usa en
+  `npm run build`.
 - Para desarrollo local, crea `.env.local` con `VITE_API_URL=http://localhost:8000`.
+- En desarrollo, Vite reescribe `/api/*` hacia `http://localhost:8000/*`. En
+  producción, el servidor web debe hacer el mismo proxy inverso.
 
 Vite solo expone variables con el prefijo `VITE_`. No guardes secretos en
 variables del frontend.
@@ -50,7 +54,8 @@ Rutas disponibles en W1:
 - `public/CNAME` fija `midinero.pradov.xyz` (GitHub Pages). Si se publica en
   otro proveedor, ese archivo se ignora y el dominio se configura en el panel
   del proveedor.
-- La API de producción se fija en `.env.production`.
+- La API de producción se consume en `/api` mediante proxy inverso
+  (`.env.production`), sin dominio ni CORS.
 
 ## Pruebas
 
